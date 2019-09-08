@@ -1,4 +1,4 @@
-from src.utilities.depth import get_depth_by_intervals
+from svc.utilities.depth import get_depth_by_intervals
 
 
 def test_get_depth_by_intervals__should_calculate_distance_with_times():
