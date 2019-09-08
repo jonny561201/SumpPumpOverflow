@@ -25,3 +25,12 @@ class TestController:
         measure_depth()
 
         mock_depth.assert_called_with(self.START, self.STOP)
+
+    def test_measure_depth__should_return_depth_calculation(self, mock_gpio, mock_depth):
+        mock_gpio.return_value = (self.START, self.STOP)
+        expected_depth = 1234.332
+        mock_depth.return_value = expected_depth
+
+        actual = measure_depth()
+
+        assert actual == expected_depth
