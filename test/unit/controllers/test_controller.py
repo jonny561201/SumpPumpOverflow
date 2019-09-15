@@ -43,4 +43,4 @@ class TestController:
 
         measure_depth()
 
-        mock_request.assert_called_with(expected_depth, self.STOP)
+        mock_request.assert_called_with(None, expected_depth, self.STOP)
