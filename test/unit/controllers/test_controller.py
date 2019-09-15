@@ -57,3 +57,17 @@ class TestController:
         actual = self.CONTROLLER.get_daily_average()
 
         assert actual == 15.0
+
+    def test_get_daily_average__should_default_to_zero_when_not_run_yet(self, mock_gpio, mock_depth, mock_request):
+        actual = self.CONTROLLER.get_daily_average()
+
+        assert actual == 0
+
+    def test_get_daily_average__should_default_to_zero_iterated_but_no_depth_measure(self, mock_gpio, mock_depth, mock_request):
+        self.CONTROLLER.iteration = 1
+        self.CONTROLLER.average_depth = 0
+
+        actual = self.CONTROLLER.get_daily_average()
+
+        assert actual == 0
+

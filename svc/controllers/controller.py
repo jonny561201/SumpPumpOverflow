@@ -20,6 +20,8 @@ class DepthController:
         return depth
 
     def get_daily_average(self):
+        if self.iteration == 0:
+            return 0
         return self.average_depth / self.iteration
 
     def __update_average_depth(self, depth):
