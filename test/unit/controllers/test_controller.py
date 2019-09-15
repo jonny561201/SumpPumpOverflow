@@ -2,7 +2,7 @@ import time
 
 from mock import patch
 
-from svc.controllers.controller import measure_depth
+from svc.controllers.controller import DepthController
 
 
 @patch('svc.controllers.controller.save_current_daily_depth')
@@ -13,17 +13,18 @@ class TestController:
     def setup_method(self):
         self.START = time.time()
         self.STOP = time.time()
+        self.CONTROLLER = DepthController()
 
     def test_measure_depth__should_call_get_intervals(self, mock_gpio, mock_depth, mock_request):
         mock_gpio.return_value = (self.START, self.STOP)
-        measure_depth()
+        self.CONTROLLER.measure_depth()
 
         mock_gpio.assert_called()
 
     def test_measure_depth__should_call_get_depth_by_intervals(self, mock_gpio, mock_depth, mock_request):
         mock_gpio.return_value = (self.START, self.STOP)
 
-        measure_depth()
+        self.CONTROLLER.measure_depth()
 
         mock_depth.assert_called_with(self.START, self.STOP)
 
@@ -32,15 +33,27 @@ class TestController:
         expected_depth = 1234.332
         mock_depth.return_value = expected_depth
 
-        actual = measure_depth()
+        actual = self.CONTROLLER.measure_depth()
 
         assert actual == expected_depth
 
-    def test_measure_depth__should_make_api_call_to_save(self, mock_gpio, mock_depth, mock_request):
+    def test_measure_depth__should_make_api_call_to_save_depth(self, mock_gpio, mock_depth, mock_request):
         expected_depth = 123.45
         mock_gpio.return_value = (self.START, self.STOP)
         mock_depth.return_value = expected_depth
 
-        measure_depth()
+        self.CONTROLLER.measure_depth()
 
         mock_request.assert_called_with(None, expected_depth, self.STOP)
+
+    def test_get_daily_average__should_average_multiple_results(self, mock_gpio, mock_depth, mock_request):
+        first_depth = 20.0
+        second_depth = 10.0
+        mock_gpio.return_value = (self.START, self.STOP)
+        mock_depth.side_effect = [first_depth, second_depth]
+
+        self.CONTROLLER.measure_depth()
+        self.CONTROLLER.measure_depth()
+        actual = self.CONTROLLER.get_daily_average()
+
+        assert actual == 15.0

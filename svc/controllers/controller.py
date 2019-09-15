@@ -5,10 +5,23 @@ from svc.utilities.api_requests import save_current_daily_depth
 USER_ID = None
 
 
-# TODO: Need to make api call to save current depth
 # TODO: Make into class to keep a running average of current depth
-def measure_depth():
-    start, stop = get_intervals()
-    depth = get_depth_by_intervals(start, stop)
-    save_current_daily_depth(USER_ID, depth, stop)
-    return depth
+class DepthController:
+
+    average_depth = 0
+    iteration = 0
+
+    def measure_depth(self):
+        start, stop = get_intervals()
+        depth = get_depth_by_intervals(start, stop)
+        save_current_daily_depth(USER_ID, depth, stop)
+        self.__update_average_depth(depth)
+
+        return depth
+
+    def get_daily_average(self):
+        return self.average_depth / self.iteration
+
+    def __update_average_depth(self, depth):
+        self.average_depth += depth
+        self.iteration += 1
