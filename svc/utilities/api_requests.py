@@ -23,4 +23,6 @@ def save_daily_average_depth(user_id, depth):
     current_date = date.today()
     post_body = {'depth': depth, 'date': str(current_date)}
 
-    requests.post(url, data=json.dumps(post_body), headers=DEFAULT_HEADERS)
+    response = requests.post(url, data=json.dumps(post_body), headers=DEFAULT_HEADERS)
+
+    return response

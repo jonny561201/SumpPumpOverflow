@@ -41,3 +41,11 @@ class TestApiRequests:
         save_daily_average_depth(self.USER_ID, self.DEPTH)
 
         mock_request.post.assert_called_with(expected_url.format(self.USER_ID), data=json.dumps(expected_data), headers=self.DEFAULT_HEADERS)
+
+    def test_save_daily_average_depth__should_return_response(self, mock_request, mock_date):
+        response = Response()
+        mock_request.post.return_value = response
+
+        actual = save_daily_average_depth(self.USER_ID, self.DEPTH)
+
+        assert actual == response
