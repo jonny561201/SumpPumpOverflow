@@ -26,3 +26,7 @@ def save_daily_average_depth(user_id, depth):
     response = requests.post(url, data=json.dumps(post_body), headers=DEFAULT_HEADERS)
 
     return response
+
+
+def send_alert():
+    pass

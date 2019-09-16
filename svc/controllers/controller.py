@@ -17,7 +17,7 @@ class DepthController:
         depth = get_depth_by_intervals(start, stop)
         save_current_daily_depth(USER_ID, depth, stop)
         self.__update_average_depth(depth)
-        alert_validation(depth)
+        alert_validation(depth, None)
 
         return depth
 
