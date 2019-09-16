@@ -5,8 +5,10 @@ EMERGENCY_DEPTH = 15.0
 AVERAGE_THRESHOLD_PERCENT = 0.2
 
 
-def alert_validation(depth, running_average):
+def alert_validation(depth, daily_average, running_average):
     if depth <= EMERGENCY_DEPTH:
         send_alert()
-    if round(1 - (running_average / depth), 2) >= AVERAGE_THRESHOLD_PERCENT:
+    elif round(1 - (daily_average / depth), 2) >= AVERAGE_THRESHOLD_PERCENT:
         send_alert()
+    # if (1 - (running_average / depth)) > AVERAGE_THRESHOLD_PERCENT:
+    #     send_alert()
