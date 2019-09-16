@@ -1,6 +1,7 @@
 from svc.utilities.gpio import get_intervals
 from svc.utilities.depth import get_depth_by_intervals
-from svc.utilities.api_requests import save_current_daily_depth
+from svc.services.api_requests import save_current_daily_depth
+from svc.services.alert import alert_validation
 
 USER_ID = None
 
@@ -16,6 +17,7 @@ class DepthController:
         depth = get_depth_by_intervals(start, stop)
         save_current_daily_depth(USER_ID, depth, stop)
         self.__update_average_depth(depth)
+        alert_validation(depth)
 
         return depth
 

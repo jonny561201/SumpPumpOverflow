@@ -4,11 +4,11 @@ from datetime import datetime, date
 from mock import patch
 from requests import Response
 
-from svc.utilities.api_requests import save_current_daily_depth, save_daily_average_depth
+from svc.services.api_requests import save_current_daily_depth, save_daily_average_depth
 
 
-@patch('svc.utilities.api_requests.date')
-@patch('svc.utilities.api_requests.requests')
+@patch('svc.services.api_requests.date')
+@patch('svc.services.api_requests.requests')
 class TestApiRequests:
     USER_ID = 'fake_user'
     DEPTH = 12.31
