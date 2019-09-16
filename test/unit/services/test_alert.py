@@ -49,10 +49,20 @@ def test_alert_validation__should_not_send_alert_twice_when_fail_multiple_checks
 
 
 @patch('svc.services.alert.send_alert')
-def test_alert_validation__should_send_alert_when_depth_twenty_percent_greater_than_running_average(mock_alert):
+def test_alert_validation__should_send_alert_when_depth_greater_than_twenty_percent_greater_than_running_average(mock_alert):
     depth = 200.0
     daily_average = 200.0
     running_average = 159.0
+    alert_validation(depth, daily_average, running_average)
+
+    mock_alert.assert_called()
+
+
+@patch('svc.services.alert.send_alert')
+def test_alert_validation__should_send_alert_when_depth_twenty_percent_greater_than_running_average(mock_alert):
+    depth = 200.0
+    daily_average = 200.0
+    running_average = 160.0
     alert_validation(depth, daily_average, running_average)
 
     mock_alert.assert_called()
