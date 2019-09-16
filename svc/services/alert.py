@@ -10,5 +10,5 @@ def alert_validation(depth, daily_average, running_average):
         send_alert()
     elif round(1 - (daily_average / depth), 2) >= AVERAGE_THRESHOLD_PERCENT:
         send_alert()
-    # if (1 - (running_average / depth)) > AVERAGE_THRESHOLD_PERCENT:
-    #     send_alert()
+    elif (1 - (running_average / depth)) > AVERAGE_THRESHOLD_PERCENT:
+        send_alert()
