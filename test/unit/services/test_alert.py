@@ -28,3 +28,12 @@ def test_alert_validation__should_not_send_alert_when_distance_equal_emergency_t
     alert_validation(depth, running_average)
 
     mock_alert.assert_called()
+
+
+@patch('svc.services.alert.send_alert')
+def test_alert_validation__should_send_alert_when_depth_ten_percent_greater_than_daily_average(mock_alert):
+    depth = 200.0
+    running_average = 159.0
+    alert_validation(depth, running_average)
+
+    mock_alert.assert_called()
