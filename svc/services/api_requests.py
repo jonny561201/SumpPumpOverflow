@@ -30,3 +30,7 @@ def save_daily_average_depth(user_id, depth):
 
 def send_alert():
     pass
+
+
+def send_warning():
+    pass

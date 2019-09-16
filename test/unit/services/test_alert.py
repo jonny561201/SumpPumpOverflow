@@ -21,22 +21,22 @@ def test_alert_validation__should_send_alert_when_distance_equal_emergency_thres
     mock_alert.assert_called()
 
 
-@patch('svc.services.alert.send_alert')
-def test_alert_validation__should_send_alert_when_depth_greater_than_twenty_percent_over_daily_average(mock_alert):
+@patch('svc.services.alert.send_warning')
+def test_alert_validation__should_send_warning_when_depth_greater_than_twenty_percent_over_daily_average(mock_warning):
     depth = 200.0
     daily_average = 159.0
     alert_validation(depth, daily_average, None)
 
-    mock_alert.assert_called()
+    mock_warning.assert_called()
 
 
-@patch('svc.services.alert.send_alert')
-def test_alert_validation__should_send_alert_when_depth_equal_twenty_percent_over_daily_average(mock_alert):
+@patch('svc.services.alert.send_warning')
+def test_alert_validation__should_send_warning_when_depth_equal_twenty_percent_over_daily_average(mock_warning):
     depth = 200.0
     daily_average = 160.0
     alert_validation(depth, daily_average, None)
 
-    mock_alert.assert_called()
+    mock_warning.assert_called()
 
 
 @patch('svc.services.alert.send_alert')
