@@ -49,6 +49,16 @@ def test_alert_validation__should_send_alert_when_distance_greater_than_alert_pe
     mock_alert.assert_called()
 
 
+@patch('svc.services.alert.send_alert')
+def test_alert_validation__should_send_alert_when_distance_equal_alert_percent_for_running(mock_alert):
+    depth = 200.0
+    daily_average = 200.0
+    running_average = 120.0
+    alert_validation(depth, daily_average, running_average)
+
+    mock_alert.assert_called()
+
+
 @patch('svc.services.alert.send_warning')
 def test_alert_validation__should_send_warning_when_depth_greater_than_twenty_percent_over_daily_average(mock_warning):
     depth = 200.0
