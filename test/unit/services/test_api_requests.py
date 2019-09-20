@@ -4,7 +4,7 @@ from datetime import datetime, date
 from mock import patch
 from requests import Response
 
-from svc.services.api_requests import save_current_daily_depth, save_daily_average_depth
+from svc.services.api_requests import save_current_depth, save_daily_average_depth
 
 
 @patch('svc.services.api_requests.date')
@@ -15,20 +15,20 @@ class TestApiRequests:
     TIME = 1234556643
     DEFAULT_HEADERS = {'Content-Type': 'text/json'}
 
-    def test_save_current_daily_depth__should_call_request(self, mock_request, mock_date):
+    def test_save_current_depth__should_call_request(self, mock_request, mock_date):
         expected_date = datetime.fromtimestamp(self.TIME)
         expected_url = 'http://localhost:8080/sumpPump/user/{}/currentDepth'
         expected_data = {'depth': self.DEPTH, 'datetime': str(expected_date)}
 
-        save_current_daily_depth(self.USER_ID, self.DEPTH, self.TIME)
+        save_current_depth(self.USER_ID, self.DEPTH, self.TIME)
 
         mock_request.post.assert_called_with(expected_url.format(self.USER_ID), data=json.dumps(expected_data), headers=self.DEFAULT_HEADERS)
 
-    def test_save_current_daily_depth__should_return_response(self, mock_request, mock_date):
+    def test_save_current_depth__should_return_response(self, mock_request, mock_date):
         response = Response()
         mock_request.post.return_value = response
 
-        actual = save_current_daily_depth(self.USER_ID, self.DEPTH, self.TIME)
+        actual = save_current_depth(self.USER_ID, self.DEPTH, self.TIME)
 
         assert actual == response
 

@@ -8,7 +8,7 @@ POST_SUMP_AVERAGE = 'http://localhost:8080/sumpPump/user/{}/averageDepth'
 DEFAULT_HEADERS = {'Content-Type': 'text/json'}
 
 
-def save_current_daily_depth(user_id, depth, time):
+def save_current_depth(user_id, depth, time):
     url = POST_SUMP_CURRENT.format(user_id)
     current_time = datetime.fromtimestamp(time)
     post_body = {'depth': depth, 'datetime': str(current_time)}
