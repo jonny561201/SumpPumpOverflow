@@ -6,7 +6,7 @@ from svc.controllers.controller import DepthController
 
 
 @patch('svc.controllers.controller.alert_validation')
-@patch('svc.controllers.controller.save_current_depth')
+@patch('svc.controllers.controller.api_requests')
 @patch('svc.controllers.controller.get_depth_by_intervals')
 @patch('svc.controllers.controller.get_intervals')
 class TestController:
@@ -45,7 +45,7 @@ class TestController:
 
         self.CONTROLLER.measure_depth()
 
-        mock_request.assert_called_with(None, expected_depth, self.STOP)
+        mock_request.save_current_depth.assert_called_with(None, expected_depth, self.STOP)
 
     def test_measure_depth__should_call_alert_validation(self, mock_gpio, mock_depth, mock_requests, mock_alert):
         depth = 123.45
@@ -81,3 +81,7 @@ class TestController:
 
         assert actual == 0
 
+    def test_save_daily_average__should_call_api_request(self, mock_gpio, mock_depth, mock_request, mock_alert):
+        self.CONTROLLER.save_daily_average()
+
+        mock_request.save_daily_average_depth.assert_called_with(self.CONTROLLER.USER_ID, self.CONTROLLER.average_depth)
