@@ -1,21 +1,13 @@
-from threading import Thread, Event
+from threading import Thread
 
 
 class MyThread(Thread):
-    def __init__(self, event):
+    def __init__(self, event, sched_function, function_interval):
         Thread.__init__(self)
         self.stopped = event
+        self.function = sched_function
+        self.interval = function_interval
 
     def run(self):
-        while not self.stopped.wait(0.5):
-            print("my thread")
-            # call a function
-
-
-stopFlag = Event()
-try:
-    thread = MyThread(stopFlag)
-    thread.start()
-except KeyboardInterrupt:
-    stopFlag.set()
-# this will stop the timer
+        while not self.stopped.wait(self.interval):
+            self.function()
