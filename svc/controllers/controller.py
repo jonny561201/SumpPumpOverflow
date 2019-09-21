@@ -4,7 +4,6 @@ from svc.services import api_requests
 from svc.services.alert import alert_validation
 
 
-# TODO: Make into class to keep a running average of current depth
 class DepthController:
 
     USER_ID = None
@@ -22,6 +21,8 @@ class DepthController:
 
     def save_daily_average(self):
         api_requests.save_daily_average_depth(self.USER_ID, self.average_depth)
+        self.average_depth = 0
+        self.iteration = 0
 
     def get_daily_average(self):
         if self.iteration == 0:

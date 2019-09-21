@@ -85,3 +85,12 @@ class TestController:
         self.CONTROLLER.save_daily_average()
 
         mock_request.save_daily_average_depth.assert_called_with(self.CONTROLLER.USER_ID, self.CONTROLLER.average_depth)
+
+    def test_save_daily_average__should_reset_objects_depth_and_iteration_tallies(self, mock_gpio, mock_depth, mock_requests, mock_alert):
+        self.CONTROLLER.iteration = 23
+        self.CONTROLLER.average_depth = 34.12
+
+        self.CONTROLLER.save_daily_average()
+
+        assert self.CONTROLLER.iteration == 0
+        assert self.CONTROLLER.average_depth == 0
