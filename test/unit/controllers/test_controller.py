@@ -54,9 +54,9 @@ class TestController:
 
         self.CONTROLLER.measure_depth()
 
-        mock_alert.assert_called_with(depth, self.CONTROLLER._get_daily_average(), None)
+        mock_alert.assert_called_with(depth, depth, None)
 
-    def test_get_daily_average__should_average_multiple_results(self, mock_gpio, mock_depth, mock_request, mock_alert):
+    def test_measure_depth__should_average_multiple_results_for_alert_validation(self, mock_gpio, mock_depth, mock_request, mock_alert):
         first_depth = 20.0
         second_depth = 10.0
         mock_gpio.return_value = (self.START, self.STOP)
@@ -64,22 +64,18 @@ class TestController:
 
         self.CONTROLLER.measure_depth()
         self.CONTROLLER.measure_depth()
-        actual = self.CONTROLLER._get_daily_average()
 
-        assert actual == 15.0
+        average_depth = (first_depth + second_depth) / 2
+        mock_alert.assert_called_with(second_depth, average_depth, None)
 
-    def test_get_daily_average__should_default_to_zero_when_not_run_yet(self, mock_gpio, mock_depth, mock_request, mock_alert):
-        actual = self.CONTROLLER._get_daily_average()
+    def test_measure_depth__should_default_to_zero_when_iterated_but_no_depth_measurement(self, mock_gpio, mock_depth, mock_request, mock_alert):
+        depth = 0.0
+        mock_gpio.return_value = (self.START, self.STOP)
+        mock_depth.return_value = depth
 
-        assert actual == 0
+        self.CONTROLLER.measure_depth()
 
-    def test_get_daily_average__should_default_to_zero_iterated_but_no_depth_measure(self, mock_gpio, mock_depth, mock_request, mock_alert):
-        self.CONTROLLER.ITERATION = 1
-        self.CONTROLLER.AVERAGE_DEPTH = 0
-
-        actual = self.CONTROLLER._get_daily_average()
-
-        assert actual == 0
+        mock_alert.assert_called_with(depth, 0, None)
 
     def test_save_daily_average__should_call_api_request(self, mock_gpio, mock_depth, mock_request, mock_alert):
         self.CONTROLLER.save_daily_average()
