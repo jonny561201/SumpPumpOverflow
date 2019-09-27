@@ -26,3 +26,9 @@ class TestManager:
         create_app()
 
         mock_thread.assert_any_call(ANY, mock_controller.return_value.save_daily_average, 720)
+
+    def test_create_app__should_start_daily_thread(self, mock_controller, mock_thread):
+        create_app()
+
+        mock_thread.return_value.start.assert_called()
+        assert mock_thread.return_value.start.call_count == 2
