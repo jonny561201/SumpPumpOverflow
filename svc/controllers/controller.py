@@ -7,8 +7,8 @@ from svc.services.alert import alert_validation
 class DepthController:
 
     USER_ID = None
-    average_depth = 0
-    iteration = 0
+    AVERAGE_DEPTH = 0
+    ITERATION = 0
 
     def measure_depth(self):
         start, stop = get_intervals()
@@ -20,16 +20,13 @@ class DepthController:
         return depth
 
     def save_daily_average(self):
-        api_requests.save_daily_average_depth(self.USER_ID, self.average_depth)
-        self.average_depth = 0
-        self.iteration = 0
+        api_requests.save_daily_average_depth(self.USER_ID, self.AVERAGE_DEPTH)
+        self.AVERAGE_DEPTH = 0
+        self.ITERATION = 0
 
     def _get_daily_average(self):
-        if self.iteration == 0:
-            return 0
-        return self.average_depth / self.iteration
+        return 0 if self.ITERATION == 0 else self.AVERAGE_DEPTH / self.ITERATION
 
     def __update_average_depth(self, depth):
-        self.average_depth += depth
-        self.iteration += 1
-
+        self.AVERAGE_DEPTH += depth
+        self.ITERATION += 1

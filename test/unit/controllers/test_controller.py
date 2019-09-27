@@ -74,8 +74,8 @@ class TestController:
         assert actual == 0
 
     def test_get_daily_average__should_default_to_zero_iterated_but_no_depth_measure(self, mock_gpio, mock_depth, mock_request, mock_alert):
-        self.CONTROLLER.iteration = 1
-        self.CONTROLLER.average_depth = 0
+        self.CONTROLLER.ITERATION = 1
+        self.CONTROLLER.AVERAGE_DEPTH = 0
 
         actual = self.CONTROLLER._get_daily_average()
 
@@ -84,13 +84,13 @@ class TestController:
     def test_save_daily_average__should_call_api_request(self, mock_gpio, mock_depth, mock_request, mock_alert):
         self.CONTROLLER.save_daily_average()
 
-        mock_request.save_daily_average_depth.assert_called_with(self.CONTROLLER.USER_ID, self.CONTROLLER.average_depth)
+        mock_request.save_daily_average_depth.assert_called_with(self.CONTROLLER.USER_ID, self.CONTROLLER.AVERAGE_DEPTH)
 
     def test_save_daily_average__should_reset_objects_depth_and_iteration_tallies(self, mock_gpio, mock_depth, mock_requests, mock_alert):
-        self.CONTROLLER.iteration = 23
-        self.CONTROLLER.average_depth = 34.12
+        self.CONTROLLER.ITERATION = 23
+        self.CONTROLLER.AVERAGE_DEPTH = 34.12
 
         self.CONTROLLER.save_daily_average()
 
-        assert self.CONTROLLER.iteration == 0
-        assert self.CONTROLLER.average_depth == 0
+        assert self.CONTROLLER.ITERATION == 0
+        assert self.CONTROLLER.AVERAGE_DEPTH == 0
