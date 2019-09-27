@@ -7,5 +7,5 @@ def create_app(interval_stop_flag, daily_stop_flag):
     interval_thread = MyThread(interval_stop_flag, controller.measure_depth, 120)
     interval_thread.start()
 
-    daily_thread = MyThread(daily_stop_flag, controller.save_daily_average, 720)
+    daily_thread = MyThread(daily_stop_flag, controller.save_daily_average, 86400)
     daily_thread.start()

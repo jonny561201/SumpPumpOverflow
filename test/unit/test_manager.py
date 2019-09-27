@@ -29,7 +29,7 @@ class TestManager:
     def test_create_app__should_create_daily_thread(self, mock_controller, mock_thread):
         create_app(self.interval_thread, self.daily_thread)
 
-        mock_thread.assert_any_call(self.daily_thread, mock_controller.return_value.save_daily_average, 720)
+        mock_thread.assert_any_call(self.daily_thread, mock_controller.return_value.save_daily_average, 86400)
 
     def test_create_app__should_start_daily_thread(self, mock_controller, mock_thread):
         create_app(self.interval_thread, self.daily_thread)
