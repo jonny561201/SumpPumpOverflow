@@ -15,7 +15,7 @@ class DepthController:
         current_depth = get_depth_by_intervals(start, stop)
         api_requests.save_current_depth(self.USER_ID, current_depth, stop)
         self.__update_average_depth(current_depth)
-        alert_validation(current_depth, self._get_daily_average(), None)
+        alert_validation(current_depth, self.__get_daily_average(), None)
 
         return current_depth
 
@@ -24,7 +24,7 @@ class DepthController:
         self.AVERAGE_DEPTH = 0
         self.ITERATION = 0
 
-    def _get_daily_average(self):
+    def __get_daily_average(self):
         return 0 if self.ITERATION == 0 else self.AVERAGE_DEPTH / self.ITERATION
 
     def __update_average_depth(self, depth):
