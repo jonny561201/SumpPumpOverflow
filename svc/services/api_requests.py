@@ -12,7 +12,7 @@ DEFAULT_HEADERS = {'Content-Type': 'text/json'}
 def save_current_depth(user_id, depth, time, alert_level):
     url = POST_SUMP_CURRENT.format(user_id)
     current_time = datetime.fromtimestamp(time)
-    post_body = {'depth': depth, 'alert_level': alert_level,'datetime': str(current_time)}
+    post_body = {'depth': depth, 'alert_level': alert_level, 'datetime': str(current_time)}
 
     response = requests.post(url, data=json.dumps(post_body), headers=DEFAULT_HEADERS)
     logging.info('Saved current depth response: {}'.format(response.status_code))

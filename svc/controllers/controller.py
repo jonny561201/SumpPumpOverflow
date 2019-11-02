@@ -18,7 +18,7 @@ class DepthController:
 
         self.__update_average_depth(current_depth)
         alert_level = calculate_alert(current_depth, self.__get_daily_average(), None)
-        api_requests.save_current_depth(self.USER_ID, current_depth, stop)
+        api_requests.save_current_depth(self.USER_ID, current_depth, stop, alert_level)
 
         return current_depth
 

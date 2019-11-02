@@ -1,6 +1,6 @@
 import time
 
-from mock import patch
+from mock import patch, ANY
 
 from svc.controllers.controller import DepthController
 
@@ -45,7 +45,16 @@ class TestController:
 
         self.CONTROLLER.measure_depth()
 
-        mock_request.save_current_depth.assert_called_with(None, expected_depth, self.STOP)
+        mock_request.save_current_depth.assert_called_with(None, expected_depth, self.STOP, ANY)
+
+    def test_measure_depth__should_make_api_call_to_save_depth_with_alert(self, mock_gpio, mock_depth, mock_request, mock_alert):
+        expected_alert_level = 2
+        mock_gpio.return_value = (self.START, self.STOP)
+        mock_alert.return_value = expected_alert_level
+
+        self.CONTROLLER.measure_depth()
+
+        mock_request.save_current_depth.assert_called_with(ANY, ANY, ANY, expected_alert_level)
 
     def test_measure_depth__should_call_alert_validation(self, mock_gpio, mock_depth, mock_requests, mock_alert):
         depth = 123.45
