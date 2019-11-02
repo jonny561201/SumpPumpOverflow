@@ -4,7 +4,7 @@ from svc.services.alert import alert_validation
 
 
 @patch('svc.services.alert.send_alert')
-def test_alert_validation__should_call_send_alert_when_exceeds_emergency_threshold(mock_alert):
+def test_alert_validation__should_send_alert_when_exceeds_emergency_threshold(mock_alert):
     depth = 14.0
     daily_average = 674.23
     alert_validation(depth, daily_average, 1000.0)
@@ -117,8 +117,7 @@ def test_alert_validation__should_not_send_warning_when_distance_above_emergency
 
 
 @patch('svc.services.alert.send_warning')
-def test_alert_validation__should_not_send_warning_when_depth_less_than_twenty_percent_greater_than_daily_average(
-        mock_warning):
+def test_alert_validation__should_not_send_warning_when_depth_less_than_twenty_percent_greater_than_daily_average(mock_warning):
     depth = 200.0
     daily_average = 180.0
     running_average = 1000.0
@@ -126,4 +125,21 @@ def test_alert_validation__should_not_send_warning_when_depth_less_than_twenty_p
 
     assert not mock_warning.called
 
+
+@patch('svc.services.alert.send_alert')
+def test_alert_validation__should_return_warning_level_of_three_when_emergency(mock_alert):
+    depth = 14.0
+    daily_average = 674.23
+    actual = alert_validation(depth, daily_average, 1000.0)
+
+    assert actual == 3
+
+
+@patch('svc.services.alert.send_alert')
+def test_alert_validation__should_return_warning_level_of_two_when_alert(mock_alert):
+    depth = 200.0
+    daily_average = 119.0
+    actual = alert_validation(depth, daily_average, 1000.0)
+
+    assert actual == 2
 
