@@ -172,3 +172,11 @@ def test_alert_validation__should_return_warning_level_of_one_when_warning_for_d
 
     assert actual == 1
 
+
+def test_alert_validation__should_return_warning_level_of_zero_when_not_exceeding_alert_states():
+    depth = 200.0
+    daily_average = 200.0
+    actual = alert_validation(depth, daily_average, 200.0)
+
+    assert actual == 0
+
