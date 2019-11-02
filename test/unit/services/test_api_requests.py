@@ -26,6 +26,7 @@ class TestApiRequests:
 
     def test_save_current_depth__should_return_response(self, mock_request, mock_date):
         response = Response()
+        response.status_code = 200
         mock_request.post.return_value = response
 
         actual = save_current_depth(self.USER_ID, self.DEPTH, self.TIME)
@@ -44,6 +45,7 @@ class TestApiRequests:
 
     def test_save_daily_average_depth__should_return_response(self, mock_request, mock_date):
         response = Response()
+        response.status_code = 200
         mock_request.post.return_value = response
 
         actual = save_daily_average_depth(self.USER_ID, self.DEPTH)
