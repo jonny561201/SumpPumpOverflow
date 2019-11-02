@@ -5,7 +5,7 @@ from mock import patch
 from svc.controllers.controller import DepthController
 
 
-@patch('svc.controllers.controller.alert_validation')
+@patch('svc.controllers.controller.calculate_alert')
 @patch('svc.controllers.controller.api_requests')
 @patch('svc.controllers.controller.get_depth_by_intervals')
 @patch('svc.controllers.controller.get_intervals')

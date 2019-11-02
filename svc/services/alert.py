@@ -6,7 +6,8 @@ WARNING_PERCENT = 0.2
 ALERT_PERCENT = 0.4
 
 
-def alert_validation(depth, daily_average, running_average):
+# TODO: looks like I need to invert alert logic
+def calculate_alert(depth, daily_average, running_average):
     alert_level = 0
     percent_of_daily = round(1 - (daily_average / depth), 2)
     percent_of_running = round(1 - (running_average / depth), 2)
