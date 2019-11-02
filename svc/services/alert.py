@@ -14,16 +14,10 @@ def alert_validation(depth, daily_average, running_average):
     if depth <= EMERGENCY_DEPTH:
         send_alert()
         alert_level = 3
-    elif percent_of_daily >= ALERT_PERCENT:
+    elif (percent_of_daily >= ALERT_PERCENT) or (percent_of_running >= ALERT_PERCENT):
         send_alert()
         alert_level = 2
-    elif percent_of_running >= ALERT_PERCENT:
-        send_alert()
-        alert_level = 2
-    elif percent_of_daily >= WARNING_PERCENT:
-        send_warning()
-        alert_level = 1
-    elif percent_of_running >= WARNING_PERCENT:
+    elif (percent_of_daily >= WARNING_PERCENT) or (percent_of_running >= WARNING_PERCENT):
         send_warning()
         alert_level = 1
 
