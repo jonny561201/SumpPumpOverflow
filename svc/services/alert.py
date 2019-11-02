@@ -22,6 +22,7 @@ def alert_validation(depth, daily_average, running_average):
         alert_level = 2
     elif percent_of_daily >= WARNING_PERCENT:
         send_warning()
+        alert_level = 1
     elif percent_of_running >= WARNING_PERCENT:
         send_warning()
         alert_level = 1

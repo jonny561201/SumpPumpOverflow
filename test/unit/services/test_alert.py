@@ -163,3 +163,12 @@ def test_alert_validation__should_return_warning_level_of_one_when_warning_for_r
 
     assert actual == 1
 
+
+@patch('svc.services.alert.send_alert')
+def test_alert_validation__should_return_warning_level_of_one_when_warning_for_daily(mock_alert):
+    depth = 200.0
+    daily_average = 160.0
+    actual = alert_validation(depth, daily_average, 1000.0)
+
+    assert actual == 1
+
