@@ -16,9 +16,9 @@ class DepthController:
         current_depth = get_depth_by_intervals(start, stop)
         logging.info('Current depth: {}'.format(current_depth))
 
-        api_requests.save_current_depth(self.USER_ID, current_depth, stop)
         self.__update_average_depth(current_depth)
         alert_validation(current_depth, self.__get_daily_average(), None)
+        api_requests.save_current_depth(self.USER_ID, current_depth, stop)
 
         return current_depth
 
