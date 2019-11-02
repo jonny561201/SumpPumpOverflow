@@ -17,10 +17,11 @@ class TestApiRequests:
 
     def test_save_current_depth__should_call_request(self, mock_request, mock_date):
         expected_date = datetime.fromtimestamp(self.TIME)
+        expected_alert_level = 0
         expected_url = 'http://localhost:8080/sumpPump/user/{}/currentDepth'
-        expected_data = {'depth': self.DEPTH, 'datetime': str(expected_date)}
+        expected_data = {'depth': self.DEPTH, 'alert_level': expected_alert_level, 'datetime': str(expected_date)}
 
-        save_current_depth(self.USER_ID, self.DEPTH, self.TIME)
+        save_current_depth(self.USER_ID, self.DEPTH, self.TIME, expected_alert_level)
 
         mock_request.post.assert_called_with(expected_url.format(self.USER_ID), data=json.dumps(expected_data), headers=self.DEFAULT_HEADERS)
 
@@ -29,7 +30,7 @@ class TestApiRequests:
         response.status_code = 200
         mock_request.post.return_value = response
 
-        actual = save_current_depth(self.USER_ID, self.DEPTH, self.TIME)
+        actual = save_current_depth(self.USER_ID, self.DEPTH, self.TIME, 1.1)
 
         assert actual == response
 
