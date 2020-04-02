@@ -4,13 +4,16 @@ from datetime import datetime, date
 
 import requests
 
-POST_SUMP_CURRENT = 'http://localhost:8080/sumpPump/user/{}/currentDepth'
-POST_SUMP_AVERAGE = 'http://localhost:8080/sumpPump/user/{}/averageDepth'
+from svc.utilities.url import get_hub_base_url
+
+POST_SUMP_CURRENT_URL = '{}/sumpPump/user/{}/currentDepth'
+POST_SUMP_AVERAGE_URL = '{}/sumpPump/user/{}/averageDepth'
 DEFAULT_HEADERS = {'Content-Type': 'text/json'}
 
 
 def save_current_depth(user_id, depth, time, alert_level):
-    url = POST_SUMP_CURRENT.format(user_id)
+    base_url = get_hub_base_url()
+    url = POST_SUMP_CURRENT_URL.format(base_url, user_id)
     current_time = datetime.fromtimestamp(time)
     post_body = {'depth': depth, 'alert_level': alert_level, 'datetime': str(current_time)}
 
@@ -21,7 +24,8 @@ def save_current_depth(user_id, depth, time, alert_level):
 
 
 def save_daily_average_depth(user_id, depth):
-    url = POST_SUMP_AVERAGE.format(user_id)
+    base_url = get_hub_base_url()
+    url = POST_SUMP_AVERAGE_URL.format(base_url, user_id)
     current_date = date.today()
     post_body = {'depth': depth, 'date': str(current_date)}
 
