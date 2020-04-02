@@ -1,0 +1,12 @@
+[Unit]
+Description=Sump Pump Monitoring Service
+After=multi-user.target
+
+[Service]
+ExecStart=/usr/bin/python3 -u app.py
+WorkingDirectory=/home/pi/SumpPumpOverflow
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
