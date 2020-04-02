@@ -11,6 +11,7 @@ POST_SUMP_AVERAGE_URL = '{}/sumpPump/user/{}/averageDepth'
 DEFAULT_HEADERS = {'Content-Type': 'text/json'}
 
 
+# TODO: Figure out how to get authorization token
 def save_current_depth(user_id, depth, time, alert_level):
     base_url = get_hub_base_url()
     url = POST_SUMP_CURRENT_URL.format(base_url, user_id)

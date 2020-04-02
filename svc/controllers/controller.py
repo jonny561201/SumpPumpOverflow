@@ -6,6 +6,7 @@ from svc.utilities.depth import get_depth_by_intervals
 from svc.utilities.gpio import get_intervals
 
 
+# TODO: figure out how to get the user id
 class DepthController:
     USER_ID = None
     AVERAGE_DEPTH = 0
