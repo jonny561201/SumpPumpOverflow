@@ -35,6 +35,7 @@ def save_daily_average_depth(user_id, depth):
     return response
 
 
+# TODO: figure out how to do push notifications!!!
 def send_alert():
     pass
 

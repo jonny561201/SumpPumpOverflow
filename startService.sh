@@ -8,14 +8,13 @@ function cloneServiceFiles {
     if [[ -d "/home/pi/SumpPumpOverflow" ]]
     then
         echo -e "${YELLOW}---------------Service Folder Exists---------------${WHITE}"
-        cd /home/pi/GarageDoorApi
+        cd /home/pi/SumpPumpOverflow
         git pull
     else
         echo -e "${YELLOW}---------------Cloning Service---------------${WHITE}"
         cd /home/pi/
-        git clone https://github.com/jonny561201/SumpPumpOverflow.git
+        git clone https://github.com/jonny561201/SumpPumpOverflow.git /home/pi/SumpPumpOverflow
     fi
-
 }
 
 function installDependencies {
