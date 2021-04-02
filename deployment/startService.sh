@@ -59,36 +59,12 @@ function restartDevice {
     sudo reboot
 }
 
-function createEnvironmentVariableFile {
-    if [[ ! -f "/home/pi/SumpPumpOverflow/serviceEnvVariables" ]]; then
-        echo -e "${YELLOW}---------------Creating Environment Variable File---------------${WHITE}"
-        createFile
-    else
-        echo -e "${YELLOW}---------------Environment Variable File Already Exists---------------${WHITE}"
-        echo 'Would you like to recreate serviceEnvVariables file? (y/n)'
-        read USER_RESPONSE
-        if [[ ${USER_RESPONSE} == "y" ]]; then
-            createFile
-        fi
-    fi
-    echo -e "${YELLOW}---------------Exporting Environment Variables---------------${WHITE}"
-    set -o allexport; source serviceEnvVariables; set +o allexport
-}
-
-function createFile {
-    echo -e "Enter HUB_BASE_URL:${WHITE}"
-    read HUB_BASE_URL
-
-    echo "TEMP_FILE_NAME=/home/pi/temperature_settings.json" > serviceEnvVariables
-    echo "HUB_BASE_URL=${HUB_BASE_URL}" >> serviceEnvVariables
-}
 
 
 stopService
 cloneServiceFiles
 startVirtualEnv
 installDependencies
-createEnvironmentVariableFile
 copyServiceFile
 configureSystemD
 restartDevice
