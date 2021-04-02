@@ -1,0 +1,13 @@
+[Unit]
+Description=Home Automation Sump Pump Monitoring Service
+After=network.target
+
+[Service]
+EnvironmentFile=/home/pi/SumpPumpOverflow/serviceEnvVariables
+ExecStart=/home/pi/SumpPumpOverflow/venv/bin/python -u app.py
+WorkingDirectory=/home/pi/SumpPumpOverflow
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
