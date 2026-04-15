@@ -1,2 +1,4 @@
-requests
+requests==2.32.5
 apscheduler
+zeroconf==0.148.0
+dataclasses-json==0.6.7
