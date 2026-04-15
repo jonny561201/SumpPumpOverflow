@@ -21,7 +21,7 @@ class MdnsRegistration:
             name=self.SERVICE_NAME,
             addresses=[socket.inet_aton(ip_address)],
             port=self._port,
-            properties={'service': 'sump-pump'},
+            properties={'service': 'sump-pump', 'max_nodes': '0'},
         )
         self._zeroconf = Zeroconf()
         self._zeroconf.register_service(self._service_info)
