@@ -1,4 +1,6 @@
 *venv
 *.idea
 **__pycache__
-settings.local.json
+*settings.local.json
+*sumpPump.log
+*apiKey.json
