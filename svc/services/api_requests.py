@@ -8,7 +8,7 @@ from svc.utilities.url import get_hub_base_url
 
 POST_SUMP_CURRENT_URL = '{}/sumpPump/user/{}/currentDepth'
 POST_SUMP_AVERAGE_URL = '{}/sumpPump/user/{}/averageDepth'
-DEFAULT_HEADERS = {'Content-Type': 'text/json'}
+DEFAULT_HEADERS = {'Content-Type': 'application/json'}
 
 
 # TODO: Figure out how to get authorization token
