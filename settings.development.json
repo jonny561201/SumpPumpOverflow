@@ -1,0 +1,7 @@
+{
+  "Environment": "dev",
+  "ApiKeyFile": "/home/pi/apiKey.json",
+  "BaseURls": {
+    "ApiHub": "http://127.0.0.1:5002/api/lights"
+  }
+}
