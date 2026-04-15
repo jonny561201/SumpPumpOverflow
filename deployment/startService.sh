@@ -59,12 +59,33 @@ function restartDevice {
     sudo reboot
 }
 
+function createEnvironmentVariableFile {
+    if [[ ! -f "/home/pi/home_automation_api/serviceEnvVariables" ]]; then
+        echo -e "${YELLOW}---------------Creating Environment Variable File---------------${WHITE}"
+        createFile
+    else
+        echo -e "${YELLOW}---------------Environment Variable File Already Exists---------------${WHITE}"
+        echo 'Would you like to recreate serviceEnvVariables file? (y/n)'
+        read USER_RESPONSE
+        if [[ ${USER_RESPONSE} == "y" ]]; then
+            createFile
+        fi
+    fi
+    echo -e "${YELLOW}---------------Exporting Environment Variables---------------${WHITE}"
+    set -o allexport; source ./serviceEnvVariables; set +o allexport
+}
+
+function createFile {
+    echo "PYTHON_ENVIRONMENT=production" >> serviceEnvVariables
+}
+
 
 
 stopService
 cloneServiceFiles
 startVirtualEnv
 installDependencies
+createEnvironmentVariableFile
 copyServiceFile
 configureSystemD
 restartDevice
