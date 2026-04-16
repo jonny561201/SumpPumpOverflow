@@ -3,7 +3,7 @@ import logging
 from svc.services import api_requests
 from svc.services.alert import calculate_alert
 from svc.utilities.depth import get_depth_by_intervals
-from svc.utilities.gpio import get_intervals
+from svc.utilities.gpio_factory import create_gpio
 
 
 REPORT_INTERVAL = 3600
@@ -17,9 +17,10 @@ class DepthController:
         self.last_reported_depth = None
         self.last_reported_alert = 0
         self.last_reported_time = None
+        self._get_intervals = create_gpio()
 
     def measure_depth(self):
-        start, stop = get_intervals()
+        start, stop = self._get_intervals()
         current_depth = get_depth_by_intervals(start, stop)
         logging.info('Current depth: {}'.format(current_depth))
 
