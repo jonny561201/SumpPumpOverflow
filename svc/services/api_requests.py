@@ -31,12 +31,3 @@ def save_daily_average_depth(depth):
     logging.info('Saved daily average depth response: {}'.format(response.status_code))
 
     return response
-
-
-# TODO: figure out how to do push notifications!!!
-def send_alert():
-    pass
-
-
-def send_warning():
-    pass
