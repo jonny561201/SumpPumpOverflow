@@ -4,7 +4,7 @@ from svc.config.settings_state import Settings
 from svc.models.registration import RegistrationData
 
 
-def get_hub_info():
+def get_hub_info() -> RegistrationData:
     file_name = Settings.get_instance().hub_info_file
     try:
         with open(file_name, 'r', encoding='utf-8') as file:

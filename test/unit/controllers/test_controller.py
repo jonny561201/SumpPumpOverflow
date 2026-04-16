@@ -45,7 +45,7 @@ class TestController:
 
         self.CONTROLLER.measure_depth()
 
-        mock_request.save_current_depth.assert_called_with(None, expected_depth, self.STOP, ANY)
+        mock_request.save_current_depth.assert_called_with(expected_depth, self.STOP, ANY)
 
     def test_measure_depth__should_make_api_call_to_save_depth_with_alert(self, mock_gpio, mock_depth, mock_request, mock_alert):
         expected_alert_level = 2
@@ -54,7 +54,7 @@ class TestController:
 
         self.CONTROLLER.measure_depth()
 
-        mock_request.save_current_depth.assert_called_with(ANY, ANY, ANY, expected_alert_level)
+        mock_request.save_current_depth.assert_called_with(ANY, ANY, expected_alert_level)
 
     def test_measure_depth__should_call_alert_validation(self, mock_gpio, mock_depth, mock_requests, mock_alert):
         depth = 123.45
@@ -89,7 +89,7 @@ class TestController:
     def test_save_daily_average__should_call_api_request(self, mock_gpio, mock_depth, mock_request, mock_alert):
         self.CONTROLLER.save_daily_average()
 
-        mock_request.save_daily_average_depth.assert_called_with(self.CONTROLLER.USER_ID, self.CONTROLLER.AVERAGE_DEPTH)
+        mock_request.save_daily_average_depth.assert_called_with(self.CONTROLLER.AVERAGE_DEPTH)
 
     def test_save_daily_average__should_reset_objects_depth_and_iteration_tallies(self, mock_gpio, mock_depth, mock_requests, mock_alert):
         self.CONTROLLER.ITERATION = 23

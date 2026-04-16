@@ -1,36 +1,32 @@
-import json
 import logging
-from datetime import datetime, date
+from datetime import datetime, date, timezone
 
 import requests
 
-from svc.utilities.url import get_hub_base_url
-
-POST_SUMP_CURRENT_URL = '{}/sumpPump/user/{}/currentDepth'
-POST_SUMP_AVERAGE_URL = '{}/sumpPump/user/{}/averageDepth'
-DEFAULT_HEADERS = {'Content-Type': 'application/json'}
+from svc.utilities.file_utils import get_hub_info
 
 
-# TODO: Figure out how to get authorization token
-def save_current_depth(user_id, depth, time, alert_level):
-    base_url = get_hub_base_url()
-    url = POST_SUMP_CURRENT_URL.format(base_url, user_id)
-    current_time = datetime.fromtimestamp(time)
-    post_body = {'depth': depth, 'alert_level': alert_level, 'datetime': str(current_time)}
+def save_current_depth(depth, time, alert_level):
+    hub = get_hub_info()
+    url = f'http://{hub.ip_address}:{hub.port}/sumpPump/currentDepth'
+    headers = {'X-API-Key': hub.api_key, 'Content-Type': 'application/json'}
+    current_time = datetime.fromtimestamp(time, tz=timezone.utc)
+    post_body = {'depth': depth, 'alert_level': alert_level, 'datetime': current_time.isoformat()}
 
-    response = requests.post(url, data=json.dumps(post_body), headers=DEFAULT_HEADERS)
+    response = requests.post(url, json=post_body, headers=headers)
     logging.info('Saved current depth response: {}'.format(response.status_code))
 
     return response
 
 
-def save_daily_average_depth(user_id, depth):
-    base_url = get_hub_base_url()
-    url = POST_SUMP_AVERAGE_URL.format(base_url, user_id)
+def save_daily_average_depth(depth):
+    hub = get_hub_info()
+    url = f'http://{hub.ip_address}:{hub.port}/sumpPump/averageDepth'
+    headers = {'X-API-Key': hub.api_key, 'Content-Type': 'application/json'}
     current_date = date.today()
     post_body = {'depth': depth, 'date': str(current_date)}
 
-    response = requests.post(url, data=json.dumps(post_body), headers=DEFAULT_HEADERS)
+    response = requests.post(url, json=post_body, headers=headers)
     logging.info('Saved daily average depth response: {}'.format(response.status_code))
 
     return response

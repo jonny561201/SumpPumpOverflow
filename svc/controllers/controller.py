@@ -6,9 +6,7 @@ from svc.utilities.depth import get_depth_by_intervals
 from svc.utilities.gpio import get_intervals
 
 
-# TODO: figure out how to get the user id
 class DepthController:
-    USER_ID = None
     AVERAGE_DEPTH = 0
     ITERATION = 0
 
@@ -19,13 +17,13 @@ class DepthController:
 
         self.__update_average_depth(current_depth)
         alert_level = calculate_alert(current_depth, self.__get_daily_average(), None)
-        api_requests.save_current_depth(self.USER_ID, current_depth, stop, alert_level)
+        api_requests.save_current_depth(current_depth, stop, alert_level)
 
         return current_depth
 
     def save_daily_average(self):
         logging.info('Recording Daily Average depth: {}'.format(self.AVERAGE_DEPTH))
-        api_requests.save_daily_average_depth(self.USER_ID, self.AVERAGE_DEPTH)
+        api_requests.save_daily_average_depth(self.AVERAGE_DEPTH)
         self.AVERAGE_DEPTH = 0
         self.ITERATION = 0
 
