@@ -2,7 +2,7 @@ from svc.controllers.controller import DepthController
 from svc.services.event import MyThread
 from svc.services.registration import wait_for_registration
 from svc.utilities.file_utils import get_hub_info
-from svc.utilities.mdns_utlity import MdnsRegistration
+from svc.utilities.mdns_utility import MdnsRegistration
 
 
 REGISTRATION_PORT = 5002

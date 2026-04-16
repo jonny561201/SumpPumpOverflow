@@ -2,7 +2,7 @@ import time
 
 from mock import patch, ANY
 
-from svc.controllers.controller import DepthController
+from svc.controllers.controller import DepthController, REPORT_INTERVAL, DEPTH_THRESHOLD
 
 
 @patch('svc.controllers.controller.calculate_alert')
@@ -99,3 +99,45 @@ class TestController:
 
         assert self.CONTROLLER.iteration == 0
         assert self.CONTROLLER.average_depth == 0
+
+
+class TestShouldReport:
+
+    def setup_method(self):
+        self.controller = DepthController()
+        self.base_time = time.time()
+
+    def test_should_report__should_return_true_on_first_reading(self):
+        assert self.controller._should_report(100.0, 0, self.base_time) is True
+
+    def test_should_report__should_return_true_when_alert_level_changes(self):
+        self.controller.last_reported_depth = 100.0
+        self.controller.last_reported_alert = 0
+        self.controller.last_reported_time = self.base_time
+
+        assert self.controller._should_report(100.0, 1, self.base_time) is True
+
+    def test_should_report__should_return_true_when_depth_exceeds_threshold(self):
+        self.controller.last_reported_depth = 100.0
+        self.controller.last_reported_alert = 0
+        self.controller.last_reported_time = self.base_time
+
+        new_depth = 100.0 + DEPTH_THRESHOLD
+        assert self.controller._should_report(new_depth, 0, self.base_time) is True
+
+    def test_should_report__should_return_true_when_report_interval_elapsed(self):
+        self.controller.last_reported_depth = 100.0
+        self.controller.last_reported_alert = 0
+        self.controller.last_reported_time = self.base_time
+
+        elapsed_time = self.base_time + REPORT_INTERVAL
+        assert self.controller._should_report(100.0, 0, elapsed_time) is True
+
+    def test_should_report__should_return_false_when_no_significant_change(self):
+        self.controller.last_reported_depth = 100.0
+        self.controller.last_reported_alert = 0
+        self.controller.last_reported_time = self.base_time
+
+        small_change = 100.0 + DEPTH_THRESHOLD - 0.1
+        short_time = self.base_time + REPORT_INTERVAL - 1
+        assert self.controller._should_report(small_change, 0, short_time) is False
