@@ -34,7 +34,7 @@ class TestApiRequests:
 
         save_current_depth(self.DEPTH, self.TIME, expected_alert_level)
 
-        mock_request.post.assert_called_with(expected_url, json=expected_data, headers=expected_headers)
+        mock_request.post.assert_called_with(expected_url, json=expected_data, headers=expected_headers, timeout=2)
 
     def test_save_current_depth__should_return_response(self, mock_request, mock_date, mock_hub_info):
         self._mock_hub(mock_hub_info)
@@ -56,7 +56,7 @@ class TestApiRequests:
 
         save_daily_average_depth(self.DEPTH)
 
-        mock_request.post.assert_called_with(expected_url, json=expected_data, headers=expected_headers)
+        mock_request.post.assert_called_with(expected_url, json=expected_data, headers=expected_headers, timeout=2)
 
     def test_save_daily_average_depth__should_return_response(self, mock_request, mock_date, mock_hub_info):
         self._mock_hub(mock_hub_info)
