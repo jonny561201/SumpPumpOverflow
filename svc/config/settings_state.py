@@ -10,7 +10,6 @@ class Settings:
 
     def __init__(self):
         self.__load_settings()
-        self.BaseUrls = BaseUrls(self._settings)
 
     @property
     def environment(self):
@@ -28,13 +27,3 @@ class Settings:
                 self._settings = json.loads(reader.read())
         except Exception:
             self._settings = {}
-
-
-class BaseUrls:
-
-    def __init__(self, settings):
-        self._settings = settings.get('BaseURls', {}) if settings is not None else {}
-
-    @property
-    def api_hub(self):
-        return self._settings.get('ApiHub')
