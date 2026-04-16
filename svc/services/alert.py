@@ -5,8 +5,8 @@ ALERT_PERCENT = 1.4
 
 def calculate_alert(depth, daily_average, running_average):
     alert_level = 0
-    percent_of_daily = round(daily_average / depth, 2)
-    percent_of_running = round(running_average / depth, 2)
+    percent_of_daily = round(daily_average / depth, 2) if depth else 0
+    percent_of_running = round(running_average / depth, 2) if running_average and depth else 0
 
     if depth <= EMERGENCY_DEPTH:
         alert_level = 3

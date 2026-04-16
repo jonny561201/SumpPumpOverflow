@@ -1,5 +1,3 @@
-from mock import patch
-
 from svc.services.alert import calculate_alert
 
 
@@ -93,4 +91,22 @@ def test_calculate_alert__should_return_warning_level_of_zero_when_not_exceeding
     actual = calculate_alert(depth, daily_average, 200.0)
 
     assert actual == 0
+
+
+def test_calculate_alert__should_not_error_when_depth_is_zero():
+    actual = calculate_alert(0.0, 100.0, 100.0)
+
+    assert actual == 3
+
+
+def test_calculate_alert__should_not_error_when_running_average_is_none():
+    actual = calculate_alert(200.0, 200.0, None)
+
+    assert actual == 0
+
+
+def test_calculate_alert__should_not_error_when_depth_and_running_average_are_zero():
+    actual = calculate_alert(0.0, 0.0, 0.0)
+
+    assert actual == 3
 
