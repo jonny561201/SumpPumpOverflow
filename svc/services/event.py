@@ -9,5 +9,6 @@ class MyThread(Thread):
         self.interval = function_interval
 
     def run(self):
+        self.function()
         while not self.stopped.wait(self.interval):
             self.function()
